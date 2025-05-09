@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ---
 title: Safe Talk
 emoji: 👀
@@ -22,7 +21,3 @@ Multi-label Emotion & Abuse Pattern Detection in Relationship Narratives
 ---
 
 Check out the configuration reference at [https://huggingface.co/docs/hub/spaces-config-reference](https://huggingface.co/docs/hub/spaces-config-reference)
-=======
-# emotion-classifier
-Multi-label Emotion &amp; Abuse Pattern Detection in Relationship Narratives
->>>>>>> 8a14b2d (Initial commit)
