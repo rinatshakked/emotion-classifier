@@ -14,12 +14,16 @@ from torch.utils.data import Dataset
 # Hugging Face transformers
 from transformers import (
     AutoTokenizer,
+    DebertaV2Tokenizer,
     BertTokenizer, 
     BertForSequenceClassification,
     AutoModelForSequenceClassification,
     Trainer,
     TrainingArguments
 )
+
+# Check for GPU availability
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Custom Dataset class
 class AbuseDataset(Dataset):
@@ -31,8 +35,8 @@ class AbuseDataset(Dataset):
         return len(self.labels)
 
     def __getitem__(self, idx):
-        item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
-        item["labels"] = torch.tensor(self.labels[idx], dtype=torch.float)
+        item = {key: torch.tensor(val[idx]).to(device) for key, val in self.encodings.items()}
+        item["labels"] = torch.tensor(self.labels[idx], dtype=torch.float).to(device)
         return item
 
 
@@ -151,13 +155,13 @@ label_matrix = df["label_vector"].tolist()
 #model_name = "onlplab/alephbert-base"
 model_name = "microsoft/deberta-v3-base"
 
-# Load pretrained Hebrew model (AlephBERT) for fine-tuning
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+# Load pretrained model for fine-tuning
+tokenizer = DebertaV2Tokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(
     model_name,
     num_labels=len(label_columns),
     problem_type="multi_label_classification"
-)
+).to(device)  # Move model to GPU
 
 # # Optional: Freeze base model layers (only train classifier head)
 # freeze_base = False
