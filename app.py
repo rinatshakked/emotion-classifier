@@ -3,12 +3,13 @@ import subprocess
 
 def run_training():
     try:
-        # Run train.py using subprocess and capture output
         result = subprocess.run(["python", "train_abuse_model.py"], capture_output=True, text=True)
-        # Return stdout if success, otherwise stderr
+        print("STDOUT:\n", result.stdout)
+        print("STDERR:\n", result.stderr)
         return result.stdout if result.returncode == 0 else f"Error:\n{result.stderr}"
     except Exception as e:
         return f"Exception occurred:\n{str(e)}"
+
 
 # Define a simple Gradio interface with one button
 demo = gr.Interface(

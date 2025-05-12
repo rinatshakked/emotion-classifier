@@ -7,6 +7,10 @@ __pycache__/
 *.so
 
 abusive-relashionship-stories/
+Abusive Relationship Stories - Technion & MSF.xlsx
+Abusive Relationship Stories - Dataset Overview.docx
+*.xlsx
+*.docx
 
 # Distribution / packaging
 .Python
