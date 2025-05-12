@@ -11,6 +11,9 @@ from sklearn.metrics import classification_report, precision_recall_fscore_suppo
 
 from torch.utils.data import Dataset
 
+# Hugging Face Hub
+from huggingface_hub import hf_hub_download
+
 # Hugging Face transformers
 from transformers import (
     AutoTokenizer,
@@ -21,6 +24,7 @@ from transformers import (
     Trainer,
     TrainingArguments
 )
+
 
 # Check for GPU availability
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -125,8 +129,14 @@ def evaluate_model_with_thresholds(trainer, test_dataset):
         "pred_labels": final_pred_str
     }
 
-# Load dataset
-df = pd.read_excel("Abusive Relationship Stories - Technion & MSF.xlsx")
+
+# Load dataset from Hugging Face Hub
+path = hf_hub_download(
+    repo_id="rshakked/abusive-relashionship-stories",
+    filename="Abusive Relationship Stories - Technion & MSF.xlsx",
+    repo_type="dataset"
+)
+df = pd.read_excel(path)
 
 # Define text and label columns
 text_column = "post_body" 

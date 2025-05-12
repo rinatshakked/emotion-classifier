@@ -4,7 +4,7 @@ import subprocess
 def run_training():
     try:
         # Run train.py using subprocess and capture output
-        result = subprocess.run(["python", "train.py"], capture_output=True, text=True)
+        result = subprocess.run(["python", "train_abuse_model.py"], capture_output=True, text=True)
         # Return stdout if success, otherwise stderr
         return result.stdout if result.returncode == 0 else f"Error:\n{result.stderr}"
     except Exception as e:
